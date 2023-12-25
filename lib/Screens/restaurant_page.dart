@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
 
 class RestaurantPage extends StatefulWidget {
   const RestaurantPage({super.key});
@@ -8,14 +9,23 @@ class RestaurantPage extends StatefulWidget {
   State<RestaurantPage> createState() => _RestaurantPageState();
 }
 
-class _RestaurantPageState extends State<RestaurantPage> {
+class _RestaurantPageState extends State<RestaurantPage>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         ///--------------------------------------Location data On AppBar
-        title: Text("Nadim's Kitchen"),
+        title: const Text("Nadim's Kitchen"),
 
         ///--------------------------------------Bell Icon On AppBar
         actions: [
@@ -40,7 +50,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 Container(
                   alignment: Alignment.topCenter,
                   width: screenSize.width,
-                  height: 320,
+                  height: screenSize.height * 0.4,
                   color: Colors.black12,
                   child: Container(
                     width: screenSize.width,
@@ -57,7 +67,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                   left: 30,
                   child: Container(
                     width: 300,
-                    height: 180,
+                    height: screenSize.height * 0.24,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25),
@@ -108,20 +118,21 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 Text(
                                   "4.4",
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 Icon(
                                   Icons.star,
                                   size: 12,
-                                  color: Colors.deepOrange,
+                                  color: Color.fromARGB(255,231, 62, 5),
                                 ),
                                 SizedBox(width: 10),
                                 Icon(
                                   Icons.wallet,
                                   size: 16,
-                                  color: Colors.deepOrange,
+                                  color: Color.fromARGB(255,231, 62, 5),
                                 ),
                                 Text(
                                   "\$35- \$65",
@@ -141,40 +152,151 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 )
               ],
             ),
-            Container(
+            const SizedBox(height: 10),
+            SizedBox(
               width: screenSize.width,
-              height: 320,
-              color: Colors.blue,
-              // child: TabBar(
-              //   controller: TabController(length: 3, vsync: this),
-              //   tabs: <Widget>[
-              //     Tab(
-              //       icon: Icon(Icons.cloud_outlined),
-              //     ),
-              //     Tab(
-              //       icon: Icon(Icons.beach_access_sharp),
-              //     ),
-              //     Tab(
-              //       icon: Icon(Icons.brightness_5_sharp),
-              //     ),
-              //   ],
-              // ),
+              height: screenSize.height * 0.03,
+              child: TabBar(
+                controller: _tabController,
+                indicatorColor: Colors.black,
+                labelColor: Colors.black,
+                tabs: const [
+                  Tab(
+                    text: "Menu Items",
+                  ),
+                  Tab(
+                    text: "Reviews",
+                  ),
+                  Tab(
+                    text: "About",
+                  ),
+                ],
+              ),
             ),
-            // const TabBarView(
-            //   children: <Widget>[
-            //     Center(
-            //       child: Text("It's cloudy here"),
-            //     ),
-            //     Center(
-            //       child: Text("It's rainy here"),
-            //     ),
-            //     Center(
-            //       child: Text("It's sunny here"),
-            //     ),
-            //   ],
-            // )
+            SizedBox(
+              width: screenSize.width,
+              height: screenSize.height * 0.35,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  ListView.builder(
+                    itemCount: 4,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: menuItem(screenSize),
+                    ),
+                  ),
+                  const Center(
+                    child: Text("Reviews"),
+                  ),
+                  const Center(
+                    child: Text("About"),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget menuItem(Size screenSize) {
+    return Container(
+      width: 390,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              image: const DecorationImage(
+                image: AssetImage("images/food1.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Container(
+            height: 100,
+            width: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Menu Items",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "\$20.54",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 5,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Container(
+              width: 100,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255,231, 62, 5),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                      onTap: () {},
+                      child: const Text("-",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                  const Text(
+                    "2",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {},
+                      child: const Text("+",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          )))
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

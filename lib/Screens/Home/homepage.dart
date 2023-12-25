@@ -66,7 +66,7 @@ class _HomepageState extends State<Homepage> {
                     child: const Text(
                       "Categories",
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Color.fromARGB(255,231, 62, 5),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -96,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                     child: const Text(
                       "Restaurants near you",
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Color.fromARGB(255,231, 62, 5),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -249,7 +249,7 @@ class _HomepageState extends State<Homepage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
-                    color: Colors.deepOrange,
+                    color: Color.fromARGB(255,231, 62, 5),
                     width: 2,
                   ),
                 ),
@@ -257,7 +257,7 @@ class _HomepageState extends State<Homepage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
                     imagePath,
-                    color: Colors.deepOrange,
+                    color: Color.fromARGB(255,231, 62, 5),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -376,7 +376,7 @@ class _HomepageState extends State<Homepage> {
 
                   /// ------ Username
                   TextSpan(
-                    text: "Dean",
+                    text: "Mansur",
                     style: TextStyle(
                       color: Colors.orange,
                       fontSize: 35,

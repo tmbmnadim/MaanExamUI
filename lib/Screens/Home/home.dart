@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:uimaanexamnadim/Screens/Home/homepage.dart';
 import 'package:uimaanexamnadim/Screens/profile_page.dart';
 
-import '../restaurant_page.dart';
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -75,8 +73,8 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      const Text("Nadim's Kitchen"),
-      const Text("Nadim's Kitchen"),
+      const Text("Account"),
+      const Text("Account"),
       const Text("Account"),
     ];
     return titleWidgets[index];
